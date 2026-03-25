@@ -18,7 +18,6 @@
       --text-dim:   #7a6f58;
       --accent:     #8b2020;
       --radius:     6px;
-      --spotify:    #1DB954;
     }
     html { scroll-behavior: smooth; }
     body {
@@ -60,54 +59,18 @@
       position: relative; z-index: 1;
     }
     .logo span { color: var(--accent); }
-    .header-desc {
-      font-size: 15px; color: var(--text-dim);
-      max-width: 480px; margin: 16px auto 0;
-      position: relative; z-index: 1;
-    }
-
     .divider {
       display: flex; align-items: center; gap: 14px;
       margin: 20px auto; max-width: 300px;
     }
-    .divider::before, .divider::after {
-      content: ''; flex: 1; height: 1px;
-    }
-    .divider::before { background: linear-gradient(to right, transparent, var(--gold-dim)); }
-    .divider::after  { background: linear-gradient(to left,  transparent, var(--gold-dim)); }
+    .divider::before { content: ''; flex: 1; height: 1px; background: linear-gradient(to right, transparent, var(--gold-dim)); }
+    .divider::after  { content: ''; flex: 1; height: 1px; background: linear-gradient(to left,  transparent, var(--gold-dim)); }
     .divider-icon { color: var(--gold); font-size: 16px; }
-
-    /* ── SUBSCRIBE BUTTON ── */
-    .subscribe-wrap {
-      display: flex;
-      justify-content: center;
-      padding: 28px 20px;
-      border-bottom: 1px solid rgba(201,168,76,0.15);
+    .header-desc {
+      font-size: 15px; color: var(--text-dim);
+      max-width: 480px; margin: 0 auto;
+      position: relative; z-index: 1;
     }
-    .btn-subscribe {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      padding: 13px 32px;
-      background: var(--spotify);
-      color: #000;
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 16px;
-      font-weight: 600;
-      letter-spacing: 1px;
-      border: none;
-      border-radius: 50px;
-      cursor: pointer;
-      text-decoration: none;
-      transition: all 0.25s;
-      box-shadow: 0 4px 20px rgba(29,185,84,0.25);
-    }
-    .btn-subscribe:hover {
-      background: #1ed760;
-      transform: translateY(-2px);
-      box-shadow: 0 6px 28px rgba(29,185,84,0.4);
-    }
-    .btn-subscribe svg { width: 20px; height: 20px; flex-shrink: 0; }
 
     /* ── MAIN ── */
     .container {
@@ -206,14 +169,74 @@
       line-height: 1.55;
     }
 
-    /* Spotify embed container */
+    /* ── CUSTOM AUDIO PLAYER ── */
     .ep-player {
-      padding: 0 16px 16px 16px;
+      padding: 4px 20px 20px 28px;
     }
-    .ep-player iframe {
+    .audio-player {
+      background: var(--parchment);
+      border: 1px solid rgba(201,168,76,0.2);
       border-radius: 8px;
-      width: 100%;
-      display: block;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .ap-play {
+      width: 42px; height: 42px;
+      border-radius: 50%;
+      border: none;
+      background: var(--gold);
+      color: var(--ink);
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .ap-play:hover { background: var(--gold-light); transform: scale(1.05); }
+    .ap-play svg { width: 16px; height: 16px; pointer-events: none; }
+    .ap-progress-wrap {
+      flex: 1;
+      display: flex; flex-direction: column; gap: 5px;
+    }
+    .ap-bar {
+      width: 100%; height: 4px;
+      -webkit-appearance: none; appearance: none;
+      background: var(--gold-dim);
+      border-radius: 2px; cursor: pointer;
+    }
+    .ap-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: var(--gold);
+      cursor: pointer;
+    }
+    .ap-bar::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: var(--gold);
+      border: none; cursor: pointer;
+    }
+    .ap-times {
+      display: flex; justify-content: space-between;
+      font-size: 11px; color: var(--text-dim);
+    }
+    .ap-vol {
+      display: flex; align-items: center; gap: 6px;
+      flex-shrink: 0;
+    }
+    .ap-vol svg { width: 15px; height: 15px; color: var(--text-dim); flex-shrink: 0; }
+    .ap-vol-bar {
+      width: 64px; height: 3px;
+      -webkit-appearance: none; appearance: none;
+      background: var(--gold-dim);
+      border-radius: 2px; cursor: pointer;
+    }
+    .ap-vol-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 11px; height: 11px;
+      border-radius: 50%; background: var(--gold);
     }
 
     /* ── NO RESULTS ── */
@@ -232,7 +255,6 @@
     }
     footer strong { color: var(--gold-dim); }
 
-    /* ── ANIMATIONS ── */
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(16px); }
       to   { opacity: 1; transform: translateY(0); }
@@ -242,8 +264,6 @@
     @media (max-width: 600px) {
       header { padding: 36px 16px 28px; }
       .logo { font-size: clamp(38px, 13vw, 60px); }
-      .subscribe-wrap { padding: 20px 16px; }
-      .btn-subscribe { padding: 11px 24px; font-size: 15px; }
       .container { padding: 0 12px 60px; }
       .search-wrap { margin: 20px 0 8px; }
       #search { font-size: 15px; padding: 11px 14px 11px 40px; }
@@ -251,7 +271,10 @@
       .ep-icon { width: 46px; height: 46px; font-size: 22px; }
       .ep-title { font-size: 16px; }
       .ep-desc { font-size: 13px; }
-      .ep-player { padding: 0 10px 12px 10px; }
+      .ep-player { padding: 4px 12px 14px 12px; }
+      .ap-vol { display: none; }
+      .audio-player { gap: 10px; padding: 12px; }
+      .ap-play { width: 38px; height: 38px; }
     }
     @media (max-width: 380px) {
       .logo { font-size: 11vw; }
@@ -271,16 +294,6 @@
   </p>
 </header>
 
-<!-- ════ SUBSCRIBE ════ -->
-<div class="subscribe-wrap">
-  <a href="https://open.spotify.com/show/" class="btn-subscribe" target="_blank" rel="noopener">
-    <svg viewBox="0 0 24 24" fill="currentColor">
-      <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/>
-    </svg>
-    Подписаться на Spotify
-  </a>
-</div>
-
 <!-- ════ EPISODES ════ -->
 <div class="container">
 
@@ -295,10 +308,10 @@
 
   <div class="episode-list" id="episode-list">
 
-    <!-- ══ ВЫПУСК 1 ══ -->
+    <!-- ══ ВЫПУСК 1: СУВОРОВ ══ -->
     <div class="episode-card"
          data-title="Суворов: непобедимый гений"
-         data-desc="Роль Александра Васильевича Суворова в русской истории">
+         data-desc="Роль личности в истории. А.В.Суворов">
       <div class="ep-header">
         <div class="ep-icon">⚔️</div>
         <div class="ep-body">
@@ -308,17 +321,30 @@
         </div>
       </div>
       <div class="ep-player">
-        <iframe
-          src="https://open.spotify.com/embed/episode/1NPjuuPDYA8HKj4NZ8pdDD?utm_source=generator&theme=0"
-          height="152"
-          frameborder="0"
-          allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-          loading="lazy">
-        </iframe>
+        <div class="audio-player" data-src="https://raw.githubusercontent.com/Gxtkf22/Audio-player_history_lesson-podcasts/main/%D0%A0%D0%BE%D0%BB%D1%8C%20%D0%BB%D0%B8%D1%87%D0%BD%D0%BE%D1%81%D1%82%D0%B8%20%D0%B2%20%D0%B8%D1%81%D1%82%D0%BE%D1%80%D0%B8%D0%B8.%20%D0%90.%D0%92.%D0%A1%D1%83%D0%B2%D0%BE%D1%80%D0%BE%D0%B2.mp3">
+          <button class="ap-play" aria-label="Воспроизвести">
+            <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor"><polygon points="6,3 20,12 6,21"/></svg>
+            <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor" style="display:none"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+          </button>
+          <div class="ap-progress-wrap">
+            <input class="ap-bar" type="range" value="0" min="0" max="100" step="0.1"/>
+            <div class="ap-times">
+              <span class="ap-cur">0:00</span>
+              <span class="ap-dur">—</span>
+            </div>
+          </div>
+          <div class="ap-vol">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+              <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+            </svg>
+            <input class="ap-vol-bar" type="range" value="90" min="0" max="100"/>
+          </div>
+        </div>
       </div>
     </div>
 
-    <!-- ══ ВЫПУСК 2 ══ -->
+    <!-- ══ ВЫПУСК 2: 1812 ══ -->
     <div class="episode-card"
          data-title="1812: Гроза двенадцатого года"
          data-desc="Причины и последствия Отечественной войны 1812 года">
@@ -331,13 +357,26 @@
         </div>
       </div>
       <div class="ep-player">
-        <iframe
-          src="https://open.spotify.com/embed/episode/0aMDfBUX9bRGiuZXkcAXDo?utm_source=generator&theme=0"
-          height="152"
-          frameborder="0"
-          allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-          loading="lazy">
-        </iframe>
+        <div class="audio-player" data-src="https://raw.githubusercontent.com/Gxtkf22/Audio-player_history_lesson-podcasts/main/%D0%9F%D1%80%D0%B8%D1%87%D0%B8%D0%BD%D1%8B%20%D0%B8%20%D0%BF%D0%BE%D1%81%D0%BB%D0%B5%D0%B4%D1%81%D1%82%D0%B2%D0%B8%D1%8F%20%D0%B8%D1%81%D1%82%D0%BE%D1%80%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%BE%D0%B3%D0%BE%20%D1%81%D0%BE%D0%B1%D1%8B%D1%82%D0%B8%D1%8F.%20%D0%9E%D1%82%D0%B5%D1%87%D0%B5%D1%81%D1%82%D0%B2%D0%B5%D0%BD%D0%BD%D0%B0%D1%8F%20%D0%B2%D0%BE%D0%B9%D0%BD%D0%B0%201812%20%D0%B3%D0%BE%D0%B4%D0%B0.mp3">
+          <button class="ap-play" aria-label="Воспроизвести">
+            <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor"><polygon points="6,3 20,12 6,21"/></svg>
+            <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor" style="display:none"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+          </button>
+          <div class="ap-progress-wrap">
+            <input class="ap-bar" type="range" value="0" min="0" max="100" step="0.1"/>
+            <div class="ap-times">
+              <span class="ap-cur">0:00</span>
+              <span class="ap-dur">—</span>
+            </div>
+          </div>
+          <div class="ap-vol">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+              <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+            </svg>
+            <input class="ap-vol-bar" type="range" value="90" min="0" max="100"/>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -354,18 +393,110 @@
 </footer>
 
 <script>
-document.getElementById('search').addEventListener('input', function() {
-  var q = this.value.toLowerCase().trim();
-  var cards = document.querySelectorAll('.episode-card');
-  var found = 0;
-  cards.forEach(function(card) {
-    var text = (card.dataset.title + ' ' + card.dataset.desc).toLowerCase();
-    var match = !q || text.includes(q);
-    card.style.display = match ? '' : 'none';
-    if (match) found++;
+(function () {
+  function fmt(s) {
+    if (!s || isNaN(s) || !isFinite(s)) return '—';
+    return Math.floor(s / 60) + ':' + String(Math.floor(s % 60)).padStart(2, '0');
+  }
+
+  // One global audio instance — stops previous when new starts
+  var currentAudio = null;
+  var currentPlayer = null;
+
+  document.querySelectorAll('.audio-player').forEach(function (player) {
+    var src     = player.dataset.src;
+    var btn     = player.querySelector('.ap-play');
+    var iconP   = player.querySelector('.icon-play');
+    var iconPa  = player.querySelector('.icon-pause');
+    var bar     = player.querySelector('.ap-bar');
+    var curEl   = player.querySelector('.ap-cur');
+    var durEl   = player.querySelector('.ap-dur');
+    var volBar  = player.querySelector('.ap-vol-bar');
+
+    var audio   = new Audio();
+    audio.preload = 'metadata';
+    audio.src   = src;
+
+    // Duration
+    audio.addEventListener('loadedmetadata', function () {
+      durEl.textContent = fmt(audio.duration);
+    });
+
+    // Time update
+    var seeking = false;
+    audio.addEventListener('timeupdate', function () {
+      if (seeking) return;
+      bar.value = audio.duration ? (audio.currentTime / audio.duration) * 100 : 0;
+      curEl.textContent = fmt(audio.currentTime);
+    });
+
+    audio.addEventListener('ended', function () {
+      iconP.style.display  = 'block';
+      iconPa.style.display = 'none';
+      bar.value = 0;
+      curEl.textContent = '0:00';
+    });
+
+    // Play / pause button
+    btn.addEventListener('click', function () {
+      // Stop other player if running
+      if (currentAudio && currentAudio !== audio) {
+        currentAudio.pause();
+        var op = currentPlayer.querySelector('.icon-play');
+        var opa = currentPlayer.querySelector('.icon-pause');
+        op.style.display  = 'block';
+        opa.style.display = 'none';
+      }
+
+      if (audio.paused) {
+        audio.play().then(function () {
+          iconP.style.display  = 'none';
+          iconPa.style.display = 'block';
+          currentAudio  = audio;
+          currentPlayer = player;
+        }).catch(function (e) {
+          console.warn('Playback error:', e);
+        });
+      } else {
+        audio.pause();
+        iconP.style.display  = 'block';
+        iconPa.style.display = 'none';
+      }
+    });
+
+    // Seek
+    bar.addEventListener('mousedown',  function () { seeking = true; });
+    bar.addEventListener('touchstart', function () { seeking = true; });
+    bar.addEventListener('input', function () {
+      curEl.textContent = fmt((bar.value / 100) * (audio.duration || 0));
+    });
+    bar.addEventListener('change', function () {
+      audio.currentTime = (bar.value / 100) * (audio.duration || 0);
+      seeking = false;
+    });
+
+    // Volume
+    if (volBar) {
+      audio.volume = volBar.value / 100;
+      volBar.addEventListener('input', function () {
+        audio.volume = volBar.value / 100;
+      });
+    }
   });
-  document.getElementById('no-results').style.display = found === 0 ? 'block' : 'none';
-});
+
+  // Search
+  document.getElementById('search').addEventListener('input', function () {
+    var q = this.value.toLowerCase().trim();
+    var cards = document.querySelectorAll('.episode-card');
+    var found = 0;
+    cards.forEach(function (card) {
+      var match = !q || (card.dataset.title + ' ' + card.dataset.desc).toLowerCase().includes(q);
+      card.style.display = match ? '' : 'none';
+      if (match) found++;
+    });
+    document.getElementById('no-results').style.display = found === 0 ? 'block' : 'none';
+  });
+})();
 </script>
 
 </body>
